@@ -6,13 +6,6 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
@@ -153,21 +146,31 @@ export default function HouseholdsEdit({ household }: Props) {
                                     <InputError message={errors.family_income} />
                                 </div>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="house_status">House Status</Label>
-                                    <Select value={houseStatus} onValueChange={setHouseStatus}>
-                                        <SelectTrigger id="house_status">
-                                            <SelectValue placeholder="Select house status" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="Rent">Rent</SelectItem>
-                                            <SelectItem value="Living Together with Parents or Relative">
-                                                Living Together with Parents or Relative
-                                            </SelectItem>
-                                            <SelectItem value="Owned">Owned</SelectItem>
-                                            <SelectItem value="Others">Others</SelectItem>
-                                        </SelectContent>
-                                    </Select>
+                                <div className="grid gap-3">
+                                    <Label>House Status</Label>
+                                    <div className="space-y-3">
+                                        {[
+                                            { value: 'Rent', label: 'Rent' },
+                                            { value: 'Living Together with Parents or Relative', label: 'Living Together with Parents or Relative' },
+                                            { value: 'Owned', label: 'Owned' },
+                                            { value: 'Others', label: 'Others' },
+                                        ].map((option) => (
+                                            <label
+                                                key={option.value}
+                                                className="flex items-center gap-3 rounded-lg border border-input p-3 cursor-pointer hover:bg-accent transition-colors"
+                                            >
+                                                <input
+                                                    type="radio"
+                                                    name="house_status"
+                                                    value={option.value}
+                                                    checked={houseStatus === option.value}
+                                                    onChange={(e) => setHouseStatus(e.target.value)}
+                                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 focus:ring-2"
+                                                />
+                                                <span className="text-sm font-medium">{option.label}</span>
+                                            </label>
+                                        ))}
+                                    </div>
                                     <InputError message={errors.house_status} />
                                 </div>
                             </div>
