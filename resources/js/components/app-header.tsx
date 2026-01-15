@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, Home, LayoutGrid, Menu, Search } from 'lucide-react';
+import { BookOpen, Folder, Home, LayoutGrid, Menu, Search, Users } from 'lucide-react';
 
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Icon } from '@/components/icon';
@@ -50,6 +50,11 @@ const mainNavItems: NavItem[] = [
         title: 'Households',
         href: HouseholdController.index.url(),
         icon: Home,
+    },
+    {
+        title: 'Users',
+        href: '/users',
+        icon: Users,
     },
 ];
 

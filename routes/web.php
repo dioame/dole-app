@@ -13,6 +13,8 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+
     Route::resource('households', \App\Http\Controllers\HouseholdController::class);
     
     Route::prefix('households/{household}')->group(function () {

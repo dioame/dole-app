@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, Home, LayoutGrid } from 'lucide-react';
+import { BookOpen, Folder, Home, LayoutGrid, Users } from 'lucide-react';
 
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -29,6 +29,11 @@ const mainNavItems: NavItem[] = [
         title: 'Households',
         href: HouseholdController.index.url(),
         icon: Home,
+    },
+    {
+        title: 'Users',
+        href: '/users',
+        icon: Users,
     },
 ];
 
