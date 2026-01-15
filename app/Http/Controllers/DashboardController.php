@@ -39,7 +39,7 @@ class DashboardController extends Controller
 
         // Total family income
         $totalFamilyIncome = Household::whereNotNull('family_income')
-            ->sum('family_income');
+            ->sum('family_income') ?? 0;
         $averageFamilyIncome = $totalHouseholds > 0 
             ? round($totalFamilyIncome / $totalHouseholds, 2) 
             : 0;

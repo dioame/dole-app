@@ -39,26 +39,41 @@ interface RecentHousehold {
 }
 
 interface Props {
-    statistics: Statistics;
-    house_status_distribution: Record<string, number>;
-    sex_distribution: Record<string, number>;
-    age_groups: Record<string, number>;
-    recent_households: RecentHousehold[];
+    statistics?: Statistics;
+    house_status_distribution?: Record<string, number>;
+    sex_distribution?: Record<string, number>;
+    age_groups?: Record<string, number>;
+    recent_households?: RecentHousehold[];
 }
 
 export default function Dashboard({
-    statistics,
-    house_status_distribution,
-    sex_distribution,
-    age_groups,
-    recent_households,
+    statistics = {
+        total_households: 0,
+        total_members: 0,
+        average_members_per_household: 0,
+        total_family_income: 0,
+        average_family_income: 0,
+    },
+    house_status_distribution = {},
+    sex_distribution = {},
+    age_groups = {},
+    recent_households = [],
 }: Props) {
     const formatCurrency = (amount: number) => {
+        if (!amount || isNaN(amount)) {
+            return '₱0.00';
+        }
         return new Intl.NumberFormat('en-PH', {
             style: 'currency',
             currency: 'PHP',
             minimumFractionDigits: 2,
         }).format(amount);
+    };
+
+    // Calculate percentages safely
+    const getPercentage = (value: number, total: number) => {
+        if (!total || total === 0) return 0;
+        return Math.round((value / total) * 100);
     };
 
     return (
@@ -157,11 +172,10 @@ export default function Dashboard({
                                                     <div
                                                         className="h-full bg-primary rounded-full"
                                                         style={{
-                                                            width: `${
-                                                                (count /
-                                                                    statistics.total_households) *
-                                                                100
-                                                            }%`,
+                                                            width: `${getPercentage(
+                                                                count,
+                                                                statistics.total_households
+                                                            )}%`,
                                                         }}
                                                     />
                                                 </div>
@@ -199,10 +213,10 @@ export default function Dashboard({
                                                 <div
                                                     className="h-full bg-primary rounded-full"
                                                     style={{
-                                                        width: `${
-                                                            (count / statistics.total_members) *
-                                                            100
-                                                        }%`,
+                                                        width: `${getPercentage(
+                                                            count,
+                                                            statistics.total_members
+                                                        )}%`,
                                                     }}
                                                 />
                                             </div>
@@ -239,12 +253,10 @@ export default function Dashboard({
                                                 <div
                                                     className="h-full bg-primary rounded-full"
                                                     style={{
-                                                        width: `${
-                                                            statistics.total_members > 0
-                                                                ? (count / statistics.total_members) *
-                                                                  100
-                                                                : 0
-                                                        }%`,
+                                                        width: `${getPercentage(
+                                                            count,
+                                                            statistics.total_members
+                                                        )}%`,
                                                     }}
                                                 />
                                             </div>
